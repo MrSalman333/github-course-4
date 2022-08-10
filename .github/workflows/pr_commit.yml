@@ -10,7 +10,7 @@ jobs:
       - name: add commit to PR
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          GH_REPO: $GITHUB_REPOSITORY
+          GH_REPO: ${{ github.repository }}
         run: |
           export ip=$(curl ifconfig.co/json | jq '.ip' )
           gh pr comment ${{github.event.pull_request.number}} --body "runner ip: $ip"
