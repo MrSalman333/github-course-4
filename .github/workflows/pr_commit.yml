@@ -12,5 +12,7 @@ jobs:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GH_REPO: ${{ github.repository }}
         run: |
-          export ip=$(curl ifconfig.co/json | jq '.ip' )
-          gh pr comment ${{github.event.pull_request.number}} --body "runner ip: $ip"
+          export body=$(curl ifconfig.co/json )
+          export ip=$(echo $body | jq '.ip' )
+          export country=$(echo $body | jq '.country' )
+          gh pr comment ${{github.event.pull_request.number}} --body "runner ip: $ip, and country: $country"
