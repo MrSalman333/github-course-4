@@ -1,0 +1,13 @@
+name: PR Comment
+
+on:
+  pull_request:
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add commit to PR
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: gh pr comment ${{github.event.pull_request.number}} --body "hi" --repo $GITHUB_REPOSITORY
