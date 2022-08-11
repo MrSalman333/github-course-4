@@ -12,7 +12,6 @@ jobs:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GH_REPO: ${{ github.repository }}
         run: |
-          export body=$(curl ifconfig.co/json )
-          export ip=$(echo $body | jq '.ip' )
-          export country=$(echo $body | jq '.country' )
-          gh pr comment ${{github.event.pull_request.number}} --body "runner ip: $ip, and country: $country"
+          export body=$(curl https://api.open-meteo.com/v1/forecast?latitude=24.85&longitude=46.71&daily=temperature_2m_max&timezone=Asia/Riyadh&start_date=2022-08-11&end_date=2022-08-11 )
+          export temp=$(echo $body | jq '.daily.temperature_2m_max.[0]' )
+          gh pr comment ${{github.event.pull_request.number}} --body "temp is: $temp"
